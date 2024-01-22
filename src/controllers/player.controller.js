@@ -24,7 +24,10 @@ const addPlayerToTeam = async (req, res, next) => {
 
     if (existPlayer) throw new Error("The player is already with a team");
 
-    const createdPlayer = await Player.create(newPlayer);
+    const createdPlayer = await Player.create({
+      ...newPlayer,
+      team_id: teamId,
+    });
     if (!createdPlayer)
       throw new Error("An error occurred while creating the player");
 

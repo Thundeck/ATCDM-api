@@ -9,6 +9,10 @@ const PlayerSchema = new Schema({
     type: String,
     require: true,
   },
+  team_id: {
+    type: OBJECT,
+    ref: "team",
+  },
   player_name: {
     type: String,
     require: true,

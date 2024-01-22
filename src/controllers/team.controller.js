@@ -1,3 +1,4 @@
+const Player = require("../models/player.model");
 const Team = require("../models/team.model");
 const cloudinary = require("../utils/cluodinary");
 
@@ -40,6 +41,23 @@ const updateTeam = async (req, res, next) => {
   }
 };
 
+const deleteTeam = async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    if (!id) throw new Error("Team ID is required");
+    const teams = await Team.findById(id);
+    if (!teams) throw new Error("Team not found");
+    const deletedTeam = await Team.findOneAndDelete(id);
+    const deletingPlayers = await Player.deleteMany({ team_id: id });
+
+    res.status(200).json(deletedTeam);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 const createTeam = async (req, res, next) => {
   console.log("llega");
   const newTeam = { ...req.body };
@@ -70,4 +88,5 @@ module.exports = {
   createTeam,
   getTeamDetails,
   updateTeam,
+  deleteTeam,
 };
