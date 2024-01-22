@@ -1,7 +1,11 @@
 const { Router } = require("express");
-const { getAllPlayers } = require("../controllers/player.controller");
+const {
+  addPlayerToTeam,
+  deletePlayer,
+} = require("../controllers/player.controller");
 const router = Router();
 
-router.get("/", getAllPlayers);
+router.post("/:teamId", addPlayerToTeam);
+router.delete("/:playerId/:teamId", deletePlayer);
 
 module.exports = router;

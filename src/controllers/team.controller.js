@@ -3,7 +3,7 @@ const cloudinary = require("../utils/cluodinary");
 
 const getAllTeams = async (req, res, next) => {
   try {
-    const teams = await Team.find();
+    const teams = await Team.find().populate("players");
     res.status(200).json(teams);
   } catch (error) {
     next(error);
@@ -17,6 +17,23 @@ const getTeamDetails = async (req, res, next) => {
     const teams = await Team.findById(id).populate("players");
     if (!teams) throw new Error("Team not found");
     res.status(200).json(teams);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const updateTeam = async (req, res, next) => {
+  const { id } = req.params;
+  const { body } = req;
+  try {
+    if (!id) throw new Error("Team ID is required");
+    const teams = await Team.findById(id);
+    if (!teams) throw new Error("Team not found");
+    const upatedTeam = await Team.findByIdAndUpdate(id, body);
+    if (!upatedTeam) throw new Error("Team not updated");
+
+    res.status(200).json(upatedTeam);
   } catch (error) {
     console.log(error);
     next(error);
@@ -52,4 +69,5 @@ module.exports = {
   getAllTeams,
   createTeam,
   getTeamDetails,
+  updateTeam,
 };

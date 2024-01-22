@@ -5,7 +5,15 @@ const Schema = mongoose.Schema;
 const OBJECT = mongoose.Types.ObjectId;
 
 const PlayerSchema = new Schema({
+  player_id: {
+    type: String,
+    require: true,
+  },
   player_name: {
+    type: String,
+    require: true,
+  },
+  player_image: {
     type: String,
     require: true,
   },

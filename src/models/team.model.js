@@ -9,7 +9,11 @@ const TeamSchema = new Schema({
     type: String,
     require: true,
   },
-  logo: String,
+  logo: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/dvmtkbykf/image/upload/v1705685474/ATC-Dream-Match/hsjipddsfsfeirk6i1op.jpg",
+  },
   players: {
     type: [OBJECT],
     ref: "player",
